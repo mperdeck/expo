@@ -28,6 +28,9 @@ OptionParser.new do |parser|
   parser.on('-k', '--apk', 'Run android apk release build job') do |g|
     options[:body]['parameters']['release_apk'] = true
   end
+  parser.on('-s', '--simulator', 'Run simulator release build job') do |s|
+    options[:body]['parameters']['release_simulator'] = true
+  end
 end.parse!
 
 uri = URI('https://circleci.com/api/v2/project/github/expo/expo/pipeline')
