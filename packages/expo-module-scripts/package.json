@@ -38,7 +38,7 @@
     "jest-expo": "~37.0.0",
     "jest-expo-enzyme": "^1.0.0",
     "ts-jest": "~25.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "gitHead": "4e13b3cb88d9205f14bee7764038ab2dd9ef1fbd"
 }
