@@ -1,0 +1,45 @@
+#! /usr/bin/env ruby
+
+require 'json'
+require 'optparse'
+require 'net/http'
+require 'uri'
+
+options = { open: false, body: { 'parameters' => {}, 'branch' => 'master' } }
+
+OptionParser.new do |parser|
+  parser.on("-h", "--help", "Prints this help") do
+    puts parser
+    exit
+  end
+  parser.on('-o', '--[no-]open', "Open the pipeline page after triggering (default false)") do |o|
+    options[:open] = o
+  end
+  parser.on('-b', '--branch BRANCH', "Run on specified branch (default '${options[:branch]}')") do |b|
+    options[:body]['branch'] = b
+  end
+  parser.on('-t', '--tag TAG', "Run on specified tag (overrides --branch)") do |t|
+    options[:body].delete('branch')
+    options[:body]['tag'] = t
+  end
+end.parse!
+
+uri = URI('https://circleci.com/api/v2/project/github/expo/expo/pipeline')
+
+res = Net::HTTP.post uri, options[:body].to_json, {
+  'Circle-Token': ENV.fetch('CIRCLE_TOKEN'),
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'x-attribution-actor-id' => 'circle-run-pipeline'
+}
+
+res.value() # raise exception unless the result was successful
+
+if options.open
+  pipelines = 'https://app.circleci.com/pipelines/github/expo/expo'
+  if options[:body]['branch']
+    pipelines += "?branch=#{options[:body]['branch'}"
+  end
+
+  %x(open #{pipelines})
+end
