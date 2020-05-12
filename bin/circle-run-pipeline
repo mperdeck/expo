@@ -22,6 +22,12 @@ OptionParser.new do |parser|
     options[:body].delete('branch')
     options[:body]['tag'] = t
   end
+  parser.on('-g', '--google-play', 'Run google play release build job') do |g|
+    options[:body]['parameters']['release_google'] = true
+  end
+  parser.on('-k', '--apk', 'Run android apk release build job') do |g|
+    options[:body]['parameters']['release_apk'] = true
+  end
 end.parse!
 
 uri = URI('https://circleci.com/api/v2/project/github/expo/expo/pipeline')
