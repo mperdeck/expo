@@ -1,15 +1,28 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkChangelog = void 0;
 const spawn_async_1 = __importDefault(require("@expo/spawn-async"));
 const fs = __importStar(require("fs"));
 const lodash_1 = require("lodash");
@@ -38,8 +51,8 @@ function getSuggestedChangelogEntries(packageNames) {
     const { [PullRequestManager_1.DEFAULT_CHANGELOG_ENTRY_KEY]: defaultEntry, ...suggestedEntries } = pullRequestManager.parseChangelogSuggestionFromDescription();
     return packageNames.map(packageName => {
         var _a, _b, _c, _d;
-        const message = (_b = (_a = suggestedEntries[packageName]) === null || _a === void 0 ? void 0 : _a.message, (_b !== null && _b !== void 0 ? _b : defaultEntry.message));
-        const type = (_d = (_c = suggestedEntries[packageName]) === null || _c === void 0 ? void 0 : _c.type, (_d !== null && _d !== void 0 ? _d : defaultEntry.type));
+        const message = (_b = (_a = suggestedEntries[packageName]) === null || _a === void 0 ? void 0 : _a.message) !== null && _b !== void 0 ? _b : defaultEntry.message;
+        const type = (_d = (_c = suggestedEntries[packageName]) === null || _c === void 0 ? void 0 : _c.type) !== null && _d !== void 0 ? _d : defaultEntry.type;
         return {
             packageName,
             message,
